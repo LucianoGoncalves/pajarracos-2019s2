@@ -1,0 +1,107 @@
+import aves.*
+import islas.*
+import nidos.*
+
+describe "Test de isla y aves" {
+
+    const aguiColo1 = new AguiluchoColorado()
+    const alba1 = new Albatro()
+    const paloTorca1 = new PalomaTorcaza()
+    const isla1 = new Isla()
+
+    fixture {
+        alba1.irAlGimnasio()
+        isla1.agregarAve(aguiColo1)
+        isla1.agregarAve(alba1)
+        isla1.agregarAve(paloTorca1)
+    }
+
+    test "Fuerza del aguilucho es 580" {
+        assert.equals(580, aguiColo1.fuerza())
+    }
+
+    test "Fuerza del abatros es 1100" {
+        assert.equals(1100, alba1.fuerza())
+    }
+
+    test "Fuerza del paloma es 700" {
+        assert.equals(700, paloTorca1.fuerza())
+    }
+
+    test "El peso del albatros debe ser 4500." {
+        assert.equals(4500, alba1.peso())
+    }
+
+    test "La fuerza total de la isla es 2380" {
+        assert.equals(2380, isla1.fuerzaTotal())
+    }
+
+    test "Aves débiles de la isla son el aguilucho y la paloma" {
+        assert.that(isla1.avesDebiles() == [ aguiColo1, paloTorca1 ])
+    }
+
+    test "La velocidad del aguilucho aumentar a 40 tras terremoto" {
+        isla1.terremoto()
+        assert.equals(40, aguiColo1.velocidad())
+    }
+
+    test "El peso del albatros a 5300 tras terremoto" {
+        isla1.terremoto()
+        assert.equals(5300, alba1.peso())
+    }
+
+    test "La ira de la paloma a 500 tras terremoto" {
+        isla1.terremoto()
+        assert.equals(500, paloTorca1.ira())
+    }
+
+    test "La fuerza del aguilucho sigue siendo 580 tras terremoto" {
+        isla1.terremoto()
+        assert.equals(580, aguiColo1.fuerza())
+    }
+
+    test "La fuerza del albatros sigue siendo 1100 tras terremoto" {
+        isla1.terremoto()
+        assert.equals(1100, alba1.fuerza())
+    }
+
+    test "La fuerza de paloma es 1400" {
+        isla1.terremoto()
+        assert.equals(1400, paloTorca1.fuerza())
+    }
+
+    test "Aguilucho es un ave debil tras terremoto" {
+        isla1.terremoto()
+        assert.that(isla1.avesDebiles() == [ aguiColo1 ])
+    }
+
+    test "Albatros y Paloma no son aves debiles tras terremoto" {
+        isla1.terremoto()
+        assert.notThat(isla1.avesDebiles() == [ alba1, paloTorca1 ])
+    }
+
+    test "Velocidad de aguilucho tras terremoto y tormenta" {
+        isla1.terremoto()
+        isla1.tormenta()
+        assert.equals(80, aguiColo1.velocidad())
+    }
+
+    test "Fuerza de aguilucho tras terremoto y tormenta" {
+        isla1.terremoto()
+        isla1.tormenta()
+        assert.equals(640, aguiColo1.fuerza())
+    }
+
+    test "peso de albatros tras terremoto y tormenta" {
+        isla1.terremoto()
+        isla1.tormenta()
+        assert.equals(5300, alba1.peso())
+    }
+
+    test "Ira de paloma tras terremoto y tormenta" {
+        isla1.terremoto()
+        isla1.tormenta()
+        assert.equals(500, paloTorca1.ira())
+    }
+
+}
